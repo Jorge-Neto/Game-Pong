@@ -1,10 +1,17 @@
+window.onload = function () {
+    setInterval(executar, 1000 / 30);
+}
+
+var posicaoBolaX = posicaoBolaY = 100;
+
+function executar() {
 var folhaDesenho = document.getElementById("folha");
 var lapis = folhaDesenho.getContext("2d");
 
 var larguraCampo = 600;
 var alturaCampo = 500;
-var larguraLinha = 5;
-var dimensaoBola = 7;
+var espessuraRede = 5;
+var diametroBola = 7;
 var alturaRaquete = 45;
 
 //cor do lápis
@@ -15,13 +22,17 @@ lapis.fillRect(0, 0, larguraCampo, alturaCampo);
 
 //divisória central
 lapis.fillStyle = '#FFFAF0';
-lapis.fillRect(larguraCampo/2 - larguraLinha/2, 0, larguraLinha, alturaCampo);
+lapis.fillRect(larguraCampo/2 - espessuraRede/2, 0, espessuraRede, alturaCampo);
 
 //raquete do player
-lapis.fillRect(0, 130, larguraLinha, alturaRaquete);
+lapis.fillRect(0, 130, espessuraRede, alturaRaquete);
 
 //raquete do com
-lapis.fillRect(larguraCampo - larguraLinha, 330, larguraLinha, alturaRaquete);
+lapis.fillRect(larguraCampo - espessuraRede, 330, espessuraRede, alturaRaquete);
 
 //bola
-lapis.fillRect(200, 150, dimensaoBola, dimensaoBola);
+lapis.fillRect(posicaoBolaX - diametroBola / 2, posicaoBolaY - diametroBola / 2, diametroBola, diametroBola);
+
+posicaoBolaX = posicaoBolaX + 1;
+posicaoBolaY = posicaoBolaY + 1;
+}
