@@ -1,26 +1,35 @@
 window.onload = function () {
-    setInterval(executar, 1000 / 60);
+    iniciar();
+
+    setInterval(principal, 1000 / 60);
 }
 
-var folhaDesenho = document.getElementById("folha");
-var lapis = folhaDesenho.getContext("2d");
+function iniciar() {
+    folhaDesenho = document.getElementById("folha");
+    lapis = folhaDesenho.getContext("2d");
 
-var larguraCampo = 650, alturaCampo = 500, espessuraRede = 5;
-var diametroBola = 7;
-var alturaRaquete = 45;
-var posicaoCom = 330, velocidadeCom = 5;
-var efeitoRaquete = 0.3;
+    larguraCampo = 650, alturaCampo = 500, espessuraRede = 5;
+    diametroBola = 7;
+    alturaRaquete = 45;
+    posicaoCom = 330, velocidadeCom = 5;
+    efeitoRaquete = 0.3;
 
-var posicaoJogadorUm = posicaoCom = 130;
-var posicaoBolaX = posicaoBolaY = 100;
-var velocidadeBolaPosicaoX = velocidadeBolaPosicaoY = 5;
-var pontuacaoJogador1 = pontuacaoJogador2 = 0;
+    posicaoJogadorUm = posicaoCom = 130;
+    posicaoBolaX = posicaoBolaY = 100;
+    velocidadeBolaPosicaoX = velocidadeBolaPosicaoY = 4;
+    pontuacaoJogador1 = pontuacaoJogador2 = 0;
 
-folhaDesenho.addEventListener('mousemove', function (e) {
-    posicaoJogadorUm = e.clientY - alturaRaquete / 2;
-});
+    folhaDesenho.addEventListener('mousemove', function (e) {
+        posicaoJogadorUm = e.clientY - alturaRaquete / 2;
+    });
+}
 
-function executar() {
+function principal() {
+    desenhar();
+    calcular();
+}
+
+function desenhar() {
     //cor do lápis
     lapis.fillStyle = '#000000';
     //area do desenho (posições)
@@ -38,7 +47,9 @@ function executar() {
 
     //bola
     lapis.fillRect(posicaoBolaX - diametroBola / 2, posicaoBolaY - diametroBola / 2, diametroBola, diametroBola);
+}
 
+function calcular() {
     //Escrever pontuacao do jogo
     lapis.fillText("Humano - " + pontuacaoJogador1 + " pontos", 100, 100);
     lapis.fillText("Computador - " + pontuacaoJogador2 + " pontos", larguraCampo - 200, 100);
@@ -69,10 +80,7 @@ function executar() {
             //ponto para jogador 2 
             pontuacaoJogador2++;
 
-            //bola para o centro
-            posicaoBolaX = larguraCampo / 2; posicaoBolaY = alturaCampo / 2;
-            velocidadeBolaPosicaoX = -velocidadeBolaPosicaoX;
-            velocidadeBolaPosicaoY = 3;
+            continuar();
         }
     }
 
@@ -88,12 +96,9 @@ function executar() {
             //ponto player
             pontuacaoJogador1 = pontuacaoJogador1 + 1;
 
-            //bola no centro
-            posicaoBolaX = larguraCampo / 2; posicaoBolaY = alturaCampo / 2;
-            velocidadeBolaPosicaoX = -velocidadeBolaPosicaoX;
-            velocidadeBolaPosicaoY = 3;
+            continuar();
         }
-    }   
+    }
 
     //Atualizar a posicao do Com
     if (posicaoCom + alturaRaquete / 2 < posicaoBolaY) {
@@ -101,4 +106,12 @@ function executar() {
     } else {
         posicaoCom = posicaoCom - velocidadeCom;
     }
-}
+};
+
+function continuar() {
+    //bola para o centro
+    posicaoBolaX = larguraCampo / 2;
+    posicaoBolaY = alturaCampo / 2;
+    velocidadeBolaPosicaoX = -velocidadeBolaPosicaoX;
+    velocidadeBolaPosicaoY = 3;
+};
